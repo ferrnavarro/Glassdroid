@@ -47,8 +47,8 @@ struct ScrcpyConfiguration: Sendable {
     var stayAwake: Bool = false
     var turnScreenOff: Bool = false
     var audioEnabled: Bool = true
-    var windowWidth: Int = 800
-    var windowHeight: Int = 1600
+    var windowWidth: Int = 440
+    var windowHeight: Int = 950
 
     func toArguments(serial: String) -> [String] {
         var args: [String] = ["-s", serial]
