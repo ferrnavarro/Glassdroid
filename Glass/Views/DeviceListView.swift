@@ -35,7 +35,8 @@ struct DeviceListView: View {
                             isEditing: editingDeviceSerial == device.serial,
                             editingAlias: editingDeviceSerial == device.serial ? $editingAlias : nil,
                             onCommit: { commitAlias(for: device) },
-                            onCancel: { editingDeviceSerial = nil }
+                            onCancel: { editingDeviceSerial = nil },
+                            isSelected: viewModel.selectedDevice == device
                         )
                         .tag(device)
                         .contextMenu {
@@ -83,11 +84,12 @@ struct DeviceRow: View {
     var editingAlias: Binding<String>?
     var onCommit: (() -> Void)?
     var onCancel: (() -> Void)?
+    var isSelected: Bool = false
 
     var body: some View {
         HStack(spacing: 10) {
             Circle()
-                .fill(statusColor)
+                .fill(isSelected ? .white : statusColor)
                 .frame(width: 8, height: 8)
 
             VStack(alignment: .leading, spacing: 2) {
@@ -105,14 +107,14 @@ struct DeviceRow: View {
                     if device.alias != nil {
                         Text(device.serial)
                             .font(.system(.caption2, design: .monospaced))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(isSelected ? .white.opacity(0.7) : .secondary)
                             .lineLimit(1)
                     }
                 }
 
                 Text(device.status.displayName)
                     .font(.caption)
-                    .foregroundStyle(statusColor)
+                    .foregroundStyle(isSelected ? .white.opacity(0.85) : statusColor)
             }
 
             Spacer()
